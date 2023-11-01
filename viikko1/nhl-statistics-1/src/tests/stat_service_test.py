@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 class PlayerReaderStub:
@@ -44,10 +44,31 @@ class TestStatisticsService(unittest.TestCase):
         team_names = [player.team for player in players_of_team]
         self.assertTrue(all(team == team_name for team in team_names))
 
-    def test_top(self):
-        number = 1 # top-metodin luupissa virhe, käytetään kuitenkin virheellistä koodia eli 1 palauttaa 2
+    def test_top_default(self):
+        number = 2
         top_players = self.stats.top(number)
         expected = ["Gretzky", "Lemieux"]
         top_names = [player.name for player in top_players]
         self.assertEqual(top_names, expected)
-        #self.assertEqual(len(top_players), number)
+        self.assertEqual(len(top_players), number)
+
+    def test_top_points(self):
+        top_players = self.stats.top(3, SortBy.POINTS)
+        expected_names = ["Gretzky", "Lemieux", "Yzerman"]
+        top_names = [player.name for player in top_players]
+        self.assertEqual(top_names, expected_names)
+        self.assertEqual(len(top_players), 3)
+
+    def test_top_goals(self):
+        top_players = self.stats.top(2, SortBy.GOALS)
+        expected_names = ["Lemieux", "Yzerman"]
+        top_names = [player.name for player in top_players]
+        self.assertEqual(top_names, expected_names)
+        self.assertEqual(len(top_players), 2)
+
+    def test_top_assists(self):
+        top_players = self.stats.top(2, SortBy.ASSISTS)
+        expected_names = ["Gretzky", "Yzerman"]
+        top_names = [player.name for player in top_players]
+        self.assertEqual(top_names, expected_names)
+        self.assertEqual(len(top_players), 2)

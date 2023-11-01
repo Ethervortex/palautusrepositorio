@@ -44,7 +44,7 @@ class TestStatisticsService(unittest.TestCase):
         team_names = [player.team for player in players_of_team]
         self.assertTrue(all(team == team_name for team in team_names))
 
-    def test_top_default(self):
+    def test_top_default(self): # tämä alunperin teht. 16, unohtui erikseen committoida
         number = 2
         top_players = self.stats.top(number)
         expected = ["Gretzky", "Lemieux"]

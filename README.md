@@ -1,2 +1,1 @@
 # palautusrepositorio
-Course: Ohjelmisotuotanto
